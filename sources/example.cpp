@@ -1,7 +1,6 @@
-// Copyright 2021 Your Name <your_email>
+// Copyright 2021 Evgenzayts evgenzaytsev2002@yandex.ru
 
 #include <stdexcept>
-
 #include <example.hpp>
 
 auto example() -> void {
