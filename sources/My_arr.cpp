@@ -5,7 +5,7 @@
 My_arr::My_arr(const size_t& size) {
   _arr = new int[size];
   _size = size;
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < _size; ++i) {
     _arr[i] = rand();
   }
 }
@@ -23,49 +23,71 @@ void My_arr::warmup() {
     k = _arr[i];
   }
 }
-void My_arr::read_direct() {
+double My_arr::read_direct() {
   [[maybe_unused]] int k = 0;
+  auto start = clock();
   for (size_t i = 0; i < 1000; ++i) {
     for (size_t j = 0; j < _size; j += 16) {
       k = _arr[j];
     }
   }
+  auto end = clock();
+
+  double result = double(end - start) / CLOCKS_PER_SEC;
+
+  return result;
 }
 
-void My_arr::read_reverse() {
+double My_arr::read_reverse() {
   [[maybe_unused]] int k = 0;
-  for (size_t i = 0; i < 1000; ++i) {
-    for (size_t j = _size; j > 0; j -= 16) {
-      k = _arr[j];
-    }
-  }
-}
-
-void My_arr::read_rand() {
-  [[maybe_unused]] int k = 0;
-  for (size_t i = 0; i < 1000; ++i) {
-    for (size_t j = 0, count = 0; count < _size; j = rand() % _size, ++count) {
-      k = _arr[j];
-    }
-  }
-}
-
-size_t My_arr::time_check(const std:: string& mode) {
-  warmup();
-
   auto start = clock();
-  if (mode == "direct") {
-    read_direct();
-  } else if (mode == "reverse") {
-    read_reverse();
-  } else if (mode == "random") {
-    read_rand();
-  } else {
-    throw std::runtime_error("Incorrect read mode");
+  for (size_t i = 0; i < 1000; ++i) {
+    for (int j = _size - 1; j >= 0; j -= 16) {
+      k = _arr[j];
+    }
   }
   auto end = clock();
 
-  size_t result = double(end - start) / CLOCKS_PER_SEC * 1000000;
+  double result = double(end - start) / CLOCKS_PER_SEC;
+
+  return result;
+}
+
+double My_arr::read_rand() {
+  [[maybe_unused]] int k = 0;
+
+
+
+  auto start = clock();
+  for (size_t i = 0; i < 1000; ++i) {
+    for (size_t j = 0, count = 0;
+         count < _size;
+         j = rand() % _size, count += 16) {
+      k = _arr[j];
+    }
+  }
+  auto end = clock();
+
+  double result = double(end - start) / CLOCKS_PER_SEC;
+
+  return result;
+}
+
+double My_arr::time_check(const std:: string& mode) {
+  warmup();
+
+  double result;
+
+  if (mode == "direct") {
+    result = read_direct();
+  } else if (mode == "reverse") {
+    result = read_reverse();
+  } else if (mode == "random") {
+    result = read_rand();
+  } else {
+    throw std::runtime_error("Incorrect read mode");
+  }
+
   return result;
 }
 

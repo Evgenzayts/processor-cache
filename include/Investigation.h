@@ -6,9 +6,10 @@
 #include <iostream>
 #include <vector>
 
-void one_investigation(const std::vector<size_t>& cache_size,
+void one_investigation(const std::vector<double>& cache_size,
                        const std::string& mode);
-void full_investigation(const std::vector<size_t>& cache_size);
-void print_travel(const std::string& mode, const std::vector<size_t>& times);
+void full_investigation(const std::vector<double>& cache_size);
+void print_travel(const std::string& mode,
+                  const std::vector< std::pair<double, double> >& times);
 
 #endif  // TEMPLATE_INVESTIGATION_H

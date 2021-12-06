@@ -1,12 +1,8 @@
 #include <Investigation.h>
-#include <example.hpp>
-#include <iostream>
 
 int main() {
-
-  const std::vector<size_t> cache_size{256 * 1024, 1024 * 1024, 8 * 1024 * 1024};
+  const std::vector<double> cache_size{0.25, 1, 8};
   full_investigation(cache_size);
 
-  example();
   return 0;
 }

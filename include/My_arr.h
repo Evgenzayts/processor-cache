@@ -16,12 +16,12 @@ class My_arr {
 
  private:
   void warmup();
-  void read_direct();
-  void read_reverse();
-  void read_rand();
+  double read_direct();
+  double read_reverse();
+  double read_rand();
 
  public:
-  size_t time_check(const std::string& mode);
+  double time_check(const std::string& mode);
 
   ~My_arr();
 };
