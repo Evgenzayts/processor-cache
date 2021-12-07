@@ -94,5 +94,5 @@ double My_arr::time_check(const std:: string& mode) {
 }
 
 My_arr::~My_arr() {
-  delete _arr;
+  delete [] _arr;
 }
