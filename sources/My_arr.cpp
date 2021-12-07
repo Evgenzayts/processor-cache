@@ -2,11 +2,13 @@
 
 #include <My_arr.h>
 
+unsigned int* seed = new unsigned int;
+
 My_arr::My_arr(const size_t& size) {
   _arr = new int[size];
   _size = size;
   for (size_t i = 0; i < _size; ++i) {
-    _arr[i] = rand();
+    _arr[i] = rand_r(seed);
   }
 }
 
@@ -14,7 +16,7 @@ My_arr::My_arr() {
   _arr = new int[64];
   _size = 64;
   for (size_t i = 0; i < 64; ++i) {
-    _arr[i] = rand();
+    _arr[i] = rand_r(seed);
   }
 }
 void My_arr::warmup() {
@@ -33,7 +35,7 @@ double My_arr::read_direct() {
   }
   auto end = clock();
 
-  double result = double(end - start) / CLOCKS_PER_SEC;
+  double result = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
   return result;
 }
@@ -48,7 +50,7 @@ double My_arr::read_reverse() {
   }
   auto end = clock();
 
-  double result = double(end - start) / CLOCKS_PER_SEC;
+  double result = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
   return result;
 }
@@ -62,13 +64,13 @@ double My_arr::read_rand() {
   for (size_t i = 0; i < 1000; ++i) {
     for (size_t j = 0, count = 0;
          count < _size;
-         j = rand() % _size, count += 16) {
+         j = rand_r(seed) % _size, count += 16) {
       k = _arr[j];
     }
   }
   auto end = clock();
 
-  double result = double(end - start) / CLOCKS_PER_SEC;
+  double result = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
   return result;
 }
